@@ -1,7 +1,7 @@
 import { Logic } from "./types"
 
 import data from "./data"
-import { DuplicityError } from "./errors"
+import { DuplicityError, CredentialsError } from "./errors"
 
 const logic: Logic = {
     registerUser(name, email, username, password) {
@@ -18,6 +18,15 @@ const logic: Logic = {
         }
 
         data.users.push(user)
+    },
+
+    authenticateUser(username, password) {
+        const user = data.users.find(user => user.username === username)
+
+        if (!user || user.password !== password)
+            throw new CredentialsError('wrong credentials')
+
+        return user.id
     }
 }
 
