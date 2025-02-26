@@ -21,7 +21,7 @@ type Data = {
 }
 
 type Logic = {
-    registerUser(name: string, email: string, username: string, password: string): Promise<void>
+    registerUser(name: string, email: string, username: string, password: string): void
     authenticateUser(username: string, password: string)
     getUserName(userId: string)
 }

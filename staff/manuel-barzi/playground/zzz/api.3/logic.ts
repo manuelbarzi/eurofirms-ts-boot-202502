@@ -1,17 +1,23 @@
 import { Logic } from "./types"
 
-import { IUser, User } from "./models"
-
 import data from "./data"
-import { SystemError, DuplicityError, CredentialsError, NotFoundError } from "./errors"
+import { DuplicityError, CredentialsError, NotFoundError } from "./errors"
 
 const logic: Logic = {
     registerUser(name, email, username, password) {
-        const user = new User<IUser>({ name, email, username, password })
+        let user = data.users.find(user => user.email === email || user.username === username)
 
-        return user.save()
-            .catch(error => { throw new SystemError(error.message) })
-            .then(user => { })
+        if (user) throw new DuplicityError('user already exists')
+
+        user = {
+            id: data.uuid(),
+            name,
+            email,
+            username,
+            password
+        }
+
+        data.users.push(user)
     },
 
     authenticateUser(username, password) {
