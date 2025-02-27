@@ -22,8 +22,8 @@ type Data = {
 
 type Logic = {
     registerUser(name: string, email: string, username: string, password: string): void
-    authenticateUser(username: string, password: string)
-    getUserName(userId: string)
+    authenticateUser(username: string, password: string): string
+    getUserName(userId: string): string
 }
 
 export {
