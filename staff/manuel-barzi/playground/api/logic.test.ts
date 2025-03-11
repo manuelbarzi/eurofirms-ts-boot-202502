@@ -23,33 +23,16 @@ mongoose.connect('mongodb://localhost:27017/test')
     //         }
     //     }
     // })
-    .then(() => {
-        console.info('TEST authenticateUser')
-
-        console.info('CASE succeeds on existing user')
-
-        {
-            try {
-                return logic.authenticateUser('peterpan', '123123123')
-                    .then(userId => {
-                        console.log('user authenticated', userId)
-                    })
-                    .catch(error => console.error(error))
-            } catch (error) {
-                console.error(error)
-            }
-        }
-    })
     // .then(() => {
-    //     console.info('TEST getUserName')
+    //     console.info('TEST authenticateUser')
 
     //     console.info('CASE succeeds on existing user')
 
     //     {
     //         try {
-    //             return logic.getUserName('67bf483049b781456d78ce1b')
-    //                 .then(userName => {
-    //                     console.log('user name gotten', userName)
+    //             return logic.authenticateUser('peterpan', '123123123')
+    //                 .then(userId => {
+    //                     console.log('user authenticated', userId)
     //                 })
     //                 .catch(error => console.error(error))
     //         } catch (error) {
@@ -57,5 +40,22 @@ mongoose.connect('mongodb://localhost:27017/test')
     //         }
     //     }
     // })
+    .then(() => {
+        console.info('TEST getUserName')
+
+        console.info('CASE succeeds on existing user')
+
+        {
+            try {
+                return logic.getUserName('67d06073aa0ae656e652b280')
+                    .then(userName => {
+                        console.log('user name gotten', userName)
+                    })
+                    .catch(error => console.error(error))
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    })
     .catch(error => console.error(error))
     .finally(() => mongoose.disconnect())
