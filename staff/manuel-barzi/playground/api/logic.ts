@@ -1,14 +1,18 @@
-import { Logic } from "./types"
+import { Schema, Types } from "mongoose"
 
-import { IUser, User } from "./models"
+import { Logic, PostType } from "./types"
+
+import { IUser, IPost, User, Post } from "./models"
 
 import { SystemError, DuplicityError, CredentialsError, NotFoundError } from "./errors"
 
+const { ObjectId } = Schema.Types
+
 const logic: Logic = {
     registerUser(name, email, username, password) {
-        const user = new User<IUser>({ name, email, username, password })
+        // TODO input validation
 
-        return user.save()
+        return User.create({ name, email, username, password })
             .catch(error => {
                 if (error.code === 11000)
                     throw new DuplicityError('user already exists')
@@ -19,6 +23,8 @@ const logic: Logic = {
     },
 
     authenticateUser(username, password) {
+        // TODO input validation
+
         return User.findOne({ username })
             .catch(error => { throw new SystemError(error.message) })
             .then(user => {
@@ -30,12 +36,53 @@ const logic: Logic = {
     },
 
     getUserName(userId) {
+        // TODO input validation
+
         return User.findById(userId)
             .catch(error => { throw new SystemError(error.message) })
             .then(user => {
                 if (!user) throw new NotFoundError('user not found')
 
                 return user.name
+            })
+    },
+
+    createPost(userId, image, text) {
+        // TODO input validation
+
+        return User.findById(userId)
+            .catch(error => { throw new SystemError(error.message) })
+            .then(user => {
+                if (!user) throw new NotFoundError('user not found')
+
+                return Post.create({ author: userId, image, text })
+                    .catch(error => { throw new SystemError(error.message) })
+            })
+            .then(post => { })
+    },
+
+    getPosts(userId) {
+        // TODO input validation
+
+        return User.findById(userId)
+            .catch(error => { throw new SystemError(error.message) })
+            .then(user => {
+                if (!user) throw new NotFoundError('user not found')
+
+                return Post.find().lean()
+            })
+            .then(posts => {
+                const normalizedPosts = posts.map<PostType>(post => {
+                    return {
+                        id: post._id.toString(),
+                        author: post.author.toString(),
+                        image: post.image,
+                        text: post.text,
+                        date: post.date
+                    }
+                })
+
+                return normalizedPosts
             })
     }
 }

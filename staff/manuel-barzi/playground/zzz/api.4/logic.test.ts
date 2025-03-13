@@ -40,52 +40,16 @@ mongoose.connect('mongodb://localhost:27017/test')
     //         }
     //     }
     // })
-    // .then(() => {
-    //     console.info('TEST getUserName')
-
-    //     console.info('CASE succeeds on existing user')
-
-    //     {
-    //         try {
-    //             return logic.getUserName('67d0683bdaa6b6a321765673')
-    //                 .then(userName => {
-    //                     console.log('user name gotten', userName)
-    //                 })
-    //                 .catch(error => console.error(error))
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    // })
-    // .then(() => {
-    //     console.info('TEST createPost')
-
-    //     console.info('CASE succeeds on existing user')
-
-    //     {
-    //         try {
-    //             return logic.createPost('67d0683bdaa6b6a321765673', 'http://image.com/123', 'hello world')
-    //                 .then(result => {
-    //                     console.assert(result === undefined, 'result is undefined')
-
-    //                     console.log('post created')
-    //                 })
-    //                 .catch(error => console.error(error))
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    // })
     .then(() => {
-        console.info('TEST getPosts')
+        console.info('TEST getUserName')
 
         console.info('CASE succeeds on existing user')
 
         {
             try {
-                return logic.getPosts('67d0683bdaa6b6a321765673')
-                    .then(posts => {
-                        console.log('posts', posts)
+                return logic.getUserName('67d06073aa0ae656e652b280')
+                    .then(userName => {
+                        console.log('user name gotten', userName)
                     })
                     .catch(error => console.error(error))
             } catch (error) {
