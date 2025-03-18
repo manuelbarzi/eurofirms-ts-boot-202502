@@ -2,20 +2,20 @@ import { Schema, Types } from "mongoose"
 
 import { Logic, PostType } from "./types"
 
-import { IUser, IPost, User, Post } from "./models"
+import { User, Post } from "./models"
 
-import { SystemError, DuplicityError, CredentialsError, NotFoundError } from "./errors"
+import { SystemError, DuplicityError, CredentialsError, NotFoundError, OwnershipError } from "./errors"
 
 const { ObjectId } = Schema.Types
 
 const logic: Logic = {
     registerUser(name, email, username, password) {
-        // TODO input validation
+        // TODO validate inputs
 
         return User.create({ name, email, username, password })
             .catch(error => {
                 if (error.code === 11000)
-                    throw new DuplicityError('user already exists')
+                    throw new DuplicityError("user already exists")
 
                 throw new SystemError(error.message)
             })
@@ -23,37 +23,37 @@ const logic: Logic = {
     },
 
     authenticateUser(username, password) {
-        // TODO input validation
+        // TODO validate inputs
 
         return User.findOne({ username })
             .catch(error => { throw new SystemError(error.message) })
             .then(user => {
                 if (!user || user.password !== password)
-                    throw new CredentialsError('wrong credentials')
+                    throw new CredentialsError("wrong credentials")
 
                 return user.id
             })
     },
 
     getUserName(userId) {
-        // TODO input validation
+        // TODO validate inputs
 
         return User.findById(userId)
             .catch(error => { throw new SystemError(error.message) })
             .then(user => {
-                if (!user) throw new NotFoundError('user not found')
+                if (!user) throw new NotFoundError("user not found")
 
                 return user.name
             })
     },
 
     createPost(userId, image, text) {
-        // TODO input validation
+        // TODO validate inputs
 
         return User.findById(userId)
             .catch(error => { throw new SystemError(error.message) })
             .then(user => {
-                if (!user) throw new NotFoundError('user not found')
+                if (!user) throw new NotFoundError("user not found")
 
                 return Post.create({ author: userId, image, text })
                     .catch(error => { throw new SystemError(error.message) })
@@ -62,12 +62,12 @@ const logic: Logic = {
     },
 
     getPosts(userId) {
-        // TODO input validation
+        // TODO validate inputs
 
         return User.findById(userId)
             .catch(error => { throw new SystemError(error.message) })
             .then(user => {
-                if (!user) throw new NotFoundError('user not found')
+                if (!user) throw new NotFoundError("user not found")
 
                 return Post.find().lean()
             })
@@ -84,6 +84,28 @@ const logic: Logic = {
 
                 return normalizedPosts
             })
+    },
+
+    deletePost(userId, postId) {
+        // TODO validate inputs
+
+        return User.findById(userId)
+            .catch(error => { throw new SystemError(error.message) })
+            .then(user => {
+                if (!user) throw new NotFoundError("user not found")
+
+                return Post.findById(postId)
+                    .catch(error => { throw new SystemError(error.message) })
+            })
+            .then(post => {
+                if (!post) throw new NotFoundError("post not found")
+
+                if (post.author.toString() !== userId) throw new OwnershipError("user is not author of post")
+
+                return Post.deleteOne({ _id: postId })
+                    .catch(error => { throw new SystemError(error.message) })
+            })
+            .then(() => { })
     }
 }
 
