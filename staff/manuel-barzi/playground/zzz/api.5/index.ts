@@ -3,7 +3,7 @@ import jwt from 'jsonwebtoken'
 import mongoose, { mongo } from 'mongoose'
 
 import { SystemError } from './errors'
-import { logic } from './logic'
+import logic from './logic'
 
 const MONGO_URL = 'mongodb://localhost:27017/test'
 const PORT = 8080

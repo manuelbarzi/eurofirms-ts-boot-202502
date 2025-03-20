@@ -1,1 +1,1 @@
-curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2QwNjgzYmRhYTZiNmEzMjE3NjU2NzMiLCJpYXQiOjE3NDE3MTE0NjR9.u41oDPworhighuyb5FKuEbRSfMpKjixJ-gFcFcZ8HOI' http://localhost:8080/users/self -v
+curl -X GET -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2N2RhYjdkYzQwMDQ2MDViZmFhNzI5YTAiLCJpYXQiOjE3NDI0OTE0NzZ9.ehETs_340-7Ttmm6kM-WLh_3zUK5tlzpB-g2ZJI1lok' http://localhost:8080/users/self -v
