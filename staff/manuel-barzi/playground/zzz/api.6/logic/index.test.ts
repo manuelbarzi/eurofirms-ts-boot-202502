@@ -3,30 +3,28 @@ import mongoose from "mongoose"
 import { logic } from "."
 
 mongoose.connect("mongodb://localhost:27017/test")
-    .then(() => {
-        console.info("SUITE logic")
-    })
-    .then(() => {
-        console.info("TEST registerUser")
+    // .then(() => {
+    //     console.info("SUITE logic")
 
-        console.info("CASE succeeds on new user")
+    //     console.info("TEST registerUser")
 
-        {
-            try {
-                // return logic.registerUser("Peter Pan", "peter@pan.com", "peterpan", "123123123")
-                // return logic.registerUser("Wendy Darling", "wendy@darling.com", "wendydarling", "123123123")
-                return logic.registerUser("Cara Melo", "cara@melo.com", "caramelo", "123123123")
-                    .then(result => {
-                        console.assert(result === undefined, "result is undefined")
+    //     console.info("CASE succeeds on new user")
 
-                        console.log("user saved")
-                    })
-                    .catch(error => console.error(error))
-            } catch (error) {
-                console.error(error)
-            }
-        }
-    })
+    //     {
+    //         try {
+    //             // return logic.registerUser("Peter Pan", "peter@pan.com", "peterpan", "123123123")
+    //             return logic.registerUser("Wendy Darling", "wendy@darling.com", "wendydarling", "123123123")
+    //                 .then(result => {
+    //                     console.assert(result === undefined, "result is undefined")
+
+    //                     console.log("user saved")
+    //                 })
+    //                 .catch(error => console.error(error))
+    //         } catch (error) {
+    //             console.error(error)
+    //         }
+    //     }
+    // })
     // .then(() => {
     //     console.info("TEST authenticateUser")
 
@@ -97,24 +95,24 @@ mongoose.connect("mongodb://localhost:27017/test")
     //         }
     //     }
     // })
-    // .then(() => {
-    //     console.info("TEST deletePost")
+    .then(() => {
+        console.info("TEST deletePost")
 
-    //     console.info("CASE succeeds on existing user")
+        console.info("CASE succeeds on existing user")
 
-    //     {
-    //         try {
-    //             return logic.deletePost("67d9a7238f3db5086f355ab6", "67d9a74535c15df007830df1")
-    //                 .then(result => {
-    //                     console.assert(result === undefined, "result is undefined")
+        {
+            try {
+                return logic.deletePost("67d9a7238f3db5086f355ab6", "67d9a74535c15df007830df1")
+                    .then(result => {
+                        console.assert(result === undefined, "result is undefined")
 
-    //                     console.log("post deleted", result)
-    //                 })
-    //                 .catch(error => console.error(error))
-    //         } catch (error) {
-    //             console.error(error)
-    //         }
-    //     }
-    // })
+                        console.log("post deleted", result)
+                    })
+                    .catch(error => console.error(error))
+            } catch (error) {
+                console.error(error)
+            }
+        }
+    })
     .catch(error => console.error(error))
     .finally(() => mongoose.disconnect())

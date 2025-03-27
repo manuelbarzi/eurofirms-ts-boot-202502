@@ -1,13 +1,9 @@
 import { RegisterUser } from "./types"
 import { User } from "../data/models"
 import { SystemError, DuplicityError } from "../errors"
-import { validate } from "../validate"
 
 export const registerUser: RegisterUser = (name, email, username, password) => {
-    validate.name(name, "name")
-    validate.email(email, "email")
-    validate.username(username, "username")
-    validate.password(password, "password")
+    // TODO validate inputs
 
     return User.create({ name, email, username, password })
         .catch(error => {

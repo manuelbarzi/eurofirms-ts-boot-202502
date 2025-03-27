@@ -28,17 +28,10 @@ class SystemError extends Error {
     }
 }
 
-class ValidationError extends Error {
-    constructor(message: string) {
-        super(message)
-    }
-}
-
 export {
     DuplicityError,
     CredentialsError,
     NotFoundError,
     OwnershipError,
-    SystemError,
-    ValidationError
+    SystemError
 }
