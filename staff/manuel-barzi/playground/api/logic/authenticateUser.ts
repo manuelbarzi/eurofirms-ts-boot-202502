@@ -1,9 +1,11 @@
 import { AuthenticateUser } from "./types"
 import { User } from "../data/models"
 import { SystemError, CredentialsError } from "../errors"
+import { validate } from "../validate"
 
 export const authenticateUser: AuthenticateUser = (username, password) => {
-    // TODO validate inputs
+    validate.username(username)
+    validate.password(password)
 
     return User.findOne({ username })
         .catch(error => { throw new SystemError(error.message) })

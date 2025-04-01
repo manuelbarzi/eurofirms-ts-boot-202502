@@ -1,9 +1,10 @@
 import { GetPosts, PostType } from "./types"
 import { User, Post } from "../data/models"
 import { SystemError, NotFoundError } from "../errors"
+import { validate } from "../validate"
 
 export const getPosts: GetPosts = (userId) => {
-    // TODO validate inputs
+    validate.id(userId, "userId")
 
     return User.findById(userId)
         .catch(error => { throw new SystemError(error.message) })

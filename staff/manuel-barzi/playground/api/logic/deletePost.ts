@@ -1,9 +1,11 @@
 import { DeletePost } from "./types"
 import { User, Post } from "../data/models"
 import { SystemError, NotFoundError, OwnershipError } from "../errors"
+import { validate } from "../validate"
 
 export const deletePost: DeletePost = (userId, postId) => {
-    // TODO validate inputs
+    validate.id(userId, "userId")
+    validate.id(postId, "postId")
 
     return User.findById(userId)
         .catch(error => { throw new SystemError(error.message) })

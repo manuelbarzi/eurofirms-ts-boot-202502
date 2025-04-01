@@ -2,6 +2,7 @@ import mongoose from "mongoose"
 import { IUser, User } from "./models"
 
 mongoose.connect('mongodb://localhost:27017/test')
+    .then(() => User.deleteMany())
     .then(() => {
         const user = new User<IUser>({
             name: 'Peter Pan',

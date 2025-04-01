@@ -1,9 +1,10 @@
 import { GetUserName } from "./types"
 import { User } from "../data/models"
 import { SystemError, NotFoundError } from "../errors"
+import { validate } from "../validate"
 
 export const getUserName: GetUserName = (userId) => {
-    // TODO validate inputs
+    validate.id(userId)
 
     return User.findById(userId)
         .catch(error => { throw new SystemError(error.message) })
