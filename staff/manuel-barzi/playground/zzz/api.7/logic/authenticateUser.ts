@@ -1,8 +1,7 @@
 import { AuthenticateUser } from "./types"
 import { User } from "../data/models"
-import { errors, validate } from "com"
-
-const { SystemError, CredentialsError } = errors
+import { SystemError, CredentialsError } from "../errors"
+import { validate } from "../validate"
 
 export const authenticateUser: AuthenticateUser = (username, password) => {
     validate.username(username)
