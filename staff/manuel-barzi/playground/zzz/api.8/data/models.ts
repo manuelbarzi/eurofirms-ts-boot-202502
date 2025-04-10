@@ -61,14 +61,9 @@ const post = new Schema<IPost>({
 const User = model<IUser>('User', user)
 const Post = model<IPost>('Post', post)
 
-type UserDoc = IUser & { _id: Types.ObjectId } & { __v: number }
-
 export {
     IUser,
     IPost,
-
     User,
-    Post,
-
-    UserDoc
+    Post
 }
