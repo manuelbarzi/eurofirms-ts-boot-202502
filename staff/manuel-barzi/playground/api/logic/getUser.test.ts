@@ -1,16 +1,16 @@
 import mongoose from "mongoose"
-import { authenticateUser } from "./authenticateUser"
+import { getUser } from "./getUser"
 
 mongoose.connect(process.env.MONGO_URL_TEST!)
     .then(() => {
-        console.info("TEST authenticateUser")
+        console.info("TEST getUser")
 
         console.info("CASE succeeds on existing user")
 
         try {
-            return authenticateUser("peterpan", "123123123")
-                .then(userId => {
-                    console.log("user authenticated", userId)
+            return getUser("6813dd5e711adc7719791875")
+                .then(userName => {
+                    console.log("user name gotten", userName)
                 })
                 .catch(error => console.error(error))
         } catch (error) {

@@ -1,10 +1,11 @@
-import express from "express"
-import jwt from "jsonwebtoken"
 import mongoose from "mongoose"
+import express from "express"
+import cors from "cors"
+import jwt from "jsonwebtoken"
 import { errors } from "com"
 import { logic } from "./logic"
 
-const { SystemError } = errors
+const { SystemError, ValidationError, DuplicityError, NotFoundError, CredentialsError } = errors
 
 const {
     MONGO_URL,
@@ -15,6 +16,8 @@ const {
 mongoose.connect(MONGO_URL!)
     .then(() => {
         const api = express()
+
+        api.use(cors())
 
         api.get("/", (req, res) => {
             res.send("Hello, API!")
@@ -30,9 +33,28 @@ mongoose.connect(MONGO_URL!)
 
                 logic.registerUser(name, email, username, password)
                     .then(() => res.status(201).send())
-                    .catch(error => res.status(500).json({ error: SystemError.name, message: error.message }))
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof DuplicityError) {
+                            status = 409
+                            errorName = DuplicityError.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: SystemError.name, message: (error as Error).message })
+                let status = 500
+                let errorName = SystemError.name
+
+                if (error instanceof ValidationError) {
+                    status = 400
+                    //errorName = error.constructor.name
+                    errorName = ValidationError.name
+                }
+
+                res.status(status).json({ error: errorName, message: (error as Error).message })
             }
         })
 
@@ -46,9 +68,31 @@ mongoose.connect(MONGO_URL!)
 
                         res.json(token)
                     })
-                    .catch(error => res.status(500).json({ error: SystemError.name, message: error.message }))
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = NotFoundError.name
+                        } else if (error instanceof CredentialsError) {
+                            status = 401
+                            errorName = CredentialsError.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: SystemError.name, message: (error as Error).message })
+                let status = 500
+                let errorName = SystemError.name
+
+                if (error instanceof ValidationError) {
+                    status = 400
+                    //errorName = error.constructor.name
+                    errorName = ValidationError.name
+                }
+
+                res.status(status).json({ error: errorName, message: (error as Error).message })
             }
         })
 
@@ -66,11 +110,30 @@ mongoose.connect(MONGO_URL!)
 
                 const { sub: userId } = jwt.verify(token, JWT_SECRET!)
 
-                logic.getUserName(userId as string)
-                    .then(name => res.json(name))
-                    .catch(error => res.status(500).json({ error: SystemError.name, message: error.message }))
+                logic.getUser(userId as string)
+                    .then(user => res.json(user))
+                    .catch(error => {
+                        let status = 500
+                        let errorName = SystemError.name
+
+                        if (error instanceof NotFoundError) {
+                            status = 404
+                            errorName = NotFoundError.name
+                        }
+
+                        res.status(status).json({ error: errorName, message: error.message })
+                    })
             } catch (error) {
-                res.status(500).json({ error: SystemError.name, message: (error as Error).message })
+                let status = 500
+                let errorName = SystemError.name
+
+                if (error instanceof ValidationError) {
+                    status = 400
+                    //errorName = error.constructor.name
+                    errorName = ValidationError.name
+                }
+
+                res.status(status).json({ error: errorName, message: (error as Error).message })
             }
         })
 

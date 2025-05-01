@@ -2,7 +2,7 @@ import { Logic, PostType } from "./types"
 
 import { registerUser } from "./registerUser"
 import { authenticateUser } from "./authenticateUser"
-import { getUser } from "./getUser"
+import { getUserName } from "./getUserName"
 import { createPost } from "./createPost"
 import { getPosts } from "./getPosts"
 import { deletePost } from "./deletePost"
@@ -10,7 +10,7 @@ import { deletePost } from "./deletePost"
 const logic: Logic = {
     registerUser,
     authenticateUser,
-    getUser,
+    getUserName,
 
     createPost,
     getPosts,

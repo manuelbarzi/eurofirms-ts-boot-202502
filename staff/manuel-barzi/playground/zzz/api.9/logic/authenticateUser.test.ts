@@ -1,7 +1,7 @@
 import mongoose from "mongoose"
 import { authenticateUser } from "./authenticateUser"
 
-mongoose.connect(process.env.MONGO_URL_TEST!)
+mongoose.connect("mongodb://localhost:27017/test")
     .then(() => {
         console.info("TEST authenticateUser")
 

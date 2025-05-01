@@ -1,16 +1,16 @@
 import mongoose from "mongoose"
-import { authenticateUser } from "./authenticateUser"
+import { getPosts } from "./getPosts"
 
-mongoose.connect(process.env.MONGO_URL_TEST!)
+mongoose.connect("mongodb://localhost:27017/test")
     .then(() => {
-        console.info("TEST authenticateUser")
+        console.info("TEST getPosts")
 
         console.info("CASE succeeds on existing user")
 
         try {
-            return authenticateUser("peterpan", "123123123")
-                .then(userId => {
-                    console.log("user authenticated", userId)
+            return getPosts("67ec1032b6802556f05ab65c")
+                .then(posts => {
+                    console.log("posts", posts)
                 })
                 .catch(error => console.error(error))
         } catch (error) {
