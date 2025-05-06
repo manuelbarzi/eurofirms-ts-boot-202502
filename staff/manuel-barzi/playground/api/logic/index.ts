@@ -7,7 +7,7 @@ import { createPost } from "./createPost"
 import { getPosts } from "./getPosts"
 import { deletePost } from "./deletePost"
 
-const logic: Logic = {
+export const logic: Logic = {
     registerUser,
     authenticateUser,
     getUser,
@@ -15,8 +15,4 @@ const logic: Logic = {
     createPost,
     getPosts,
     deletePost
-}
-
-export {
-    logic
 }
