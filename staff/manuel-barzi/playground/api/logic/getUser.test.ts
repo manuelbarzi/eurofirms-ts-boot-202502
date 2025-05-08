@@ -8,9 +8,9 @@ mongoose.connect(process.env.MONGO_URL_TEST!)
         console.info("CASE succeeds on existing user")
 
         try {
-            return getUser("6813dd5e711adc7719791875")
-                .then(userName => {
-                    console.log("user name gotten", userName)
+            return getUser("681ccdefbd7959be5cbad5a2")
+                .then(user => {
+                    console.log("user gotten", user)
                 })
                 .catch(error => console.error(error))
         } catch (error) {
