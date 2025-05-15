@@ -1,0 +1,38 @@
+{
+  "name": "api",
+  "version": "0.0.0",
+  "main": "index.ts",
+  "scripts": {
+    "start": "npx tsx --env-file=.env index.ts",
+    "inspect": "npx tsx --env-file=.env --inspect-brk index.ts",
+    "compile": "npx tsc --lib es2015,dom --noEmit --esModuleInterop --skipLibCheck --strict *.ts **/*.ts",
+    "compile-watch": "npx tsc --lib es2015,dom --noEmit --esModuleInterop --skipLibCheck --strict *.ts **/*.ts --watch",
+    "test": "mocha --node-option 'env-file=.env' --node-option 'import=tsx' logic/*.spec.ts",
+    "test-inspect": "mocha --node-option 'inspect-brk' --node-option 'env-file=.env' --node-option 'import=tsx' logic/*.spec.ts",
+    "compile-test": "npm run compile && npm run test",
+    "populate": "tsx data/populate"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@types/chai": "^5.2.1",
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/jsonwebtoken": "^9.0.9",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^22.14.0",
+    "chai": "^5.2.0",
+    "mocha": "^11.1.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  },
+  "dependencies": {
+    "com": "file:../com",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.10.2"
+  }
+}
