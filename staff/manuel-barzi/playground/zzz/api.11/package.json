@@ -5,8 +5,8 @@
   "scripts": {
     "start": "npx tsx --env-file=.env index.ts",
     "inspect": "npx tsx --env-file=.env --inspect-brk index.ts",
-    "compile": "npx tsc",
-    "compile-watch": "npx tsc --watch",
+    "compile": "npx tsc --lib es2015,dom --noEmit --esModuleInterop --skipLibCheck --strict *.ts **/*.ts",
+    "compile-watch": "npx tsc --lib es2015,dom --noEmit --esModuleInterop --skipLibCheck --strict *.ts **/*.ts --watch",
     "test": "mocha --node-option 'env-file=.env' --node-option 'import=tsx' logic/*.spec.ts",
     "test-inspect": "mocha --node-option 'inspect-brk' --node-option 'env-file=.env' --node-option 'import=tsx' logic/*.spec.ts",
     "compile-test": "npm run compile && npm run test",

@@ -4,7 +4,7 @@
   "type": "module",
   "main": "index.ts",
   "scripts": {
-    "compile-watch": "npx tsc --watch",
+    "compile-watch": "npx tsc --lib es2015,dom --noEmit --esModuleInterop --skipLibCheck --watch --strict *.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
