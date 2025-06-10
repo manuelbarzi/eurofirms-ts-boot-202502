@@ -4,10 +4,12 @@
   "main": "index.ts",
   "scripts": {
     "start": "npx tsx --env-file=.env index.ts",
+    "start-watch": "npx tsx watch --env-file=.env index.ts",
     "inspect": "npx tsx --env-file=.env --inspect-brk index.ts",
     "compile": "npx tsc",
     "compile-watch": "npx tsc --watch",
     "test": "mocha --node-option 'env-file=.env' --node-option 'import=tsx' logic/*.spec.ts",
+    "test-watch": "mocha --node-option 'env-file=.env' --node-option 'import=tsx' --node-option 'watch' logic/*.spec.ts",
     "test-inspect": "mocha --node-option 'inspect-brk' --node-option 'env-file=.env' --node-option 'import=tsx' logic/*.spec.ts",
     "compile-test": "npm run compile && npm run test",
     "populate": "tsx data/populate"

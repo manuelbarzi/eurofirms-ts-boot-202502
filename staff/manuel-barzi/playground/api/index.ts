@@ -16,7 +16,7 @@ mongoose.connect(MONGO_URL!)
         api.use(cors())
 
         api.get("/", (req, res) => {
-            res.send("Hello, API!")
+            res.send("Hello,API!")
         })
 
         api.use("/users", usersRouter)
