@@ -5,12 +5,12 @@ export class Robot {
     direction: string
     orientation: string
 
-    constructor() {
+    constructor(orientation = "north") {
         this.x = 0
         this.y = 0
 
         this.direction = "deadlock"
-        this.orientation = "north"
+        this.orientation = orientation
     }
 
     forward() {
